@@ -1,0 +1,71 @@
+<div ng-controller="homeController">
+  <div class="row">
+    <div class="col-md-6">
+      <form class="form-inline">
+        <div class="form-group">
+          <label for="categorySearch">Search by category:</label>
+          <select id="categorySearch" class="form-control">
+            <option></option>
+            <option>Option 1</option>
+            <option>Option 2</option>
+            <option>Option 3</option>
+            <option>Option 4</option>
+            <option>Option 5</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="nameSearch">Search by name:</label>
+          <input type="text" class="form-control" id="nameSearch">
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-2">
+      <div id="checkout">Checkout | Bag: Empty!</div>
+    </div>
+  </div>
+  <br>
+  <!--Begin Tea Table-->
+  <div class="row">
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Tea</th>
+          <th>Information</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="tea in inventory">
+          <td>
+            <img ng-src="{{tea.imageUrl}}">
+          </td>
+          <td>
+            <div class="row">
+              <div class="col-md-12">
+                <h3>{{tea.name}} <span class="pull-right">Quantity:</span></h3>
+              </div>
+            </div>
+            <div class="row"></div>
+              <p>Price: {{tea.price | moveDecimal | currency}}</p>
+              <p>Caffeine Scale: {{tea.caffeineScale}}</p>
+            <div class="row"></div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+ <!--   {
+        "_id": "55c8ee82152165d244b98300",
+        "name": "Bayard stew",
+        "ingredients": "concentrated gluten, jewelry, dill, beetle nut, toast",
+        "caffeineScale": 244,
+        "price": 1540,
+        "inStock": true,
+        "rating": 1,
+        "imageUrl": "http://s7d5.scene7.com/is/image/Teavana/32664_d?$cimg$",
+        "__v": 0,
+        "categories": [ "dark", "cold"]
+    },-->
