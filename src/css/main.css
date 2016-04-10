@@ -8,3 +8,17 @@
   height: 35px;
   width: 12em;
 }
+
+th {
+  position: relative;
+}
+
+#tea {
+  position: absolute;
+  bottom: 2.5em;
+}
+
+#info {
+  position: absolute;
+  top: 2.5em;
+}

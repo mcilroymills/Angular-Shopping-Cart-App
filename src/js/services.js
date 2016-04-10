@@ -6,22 +6,16 @@ angular.module("myApp").service("inventoryService", [function(){
     getInventory: function () {
         return inventory;
     },
-    getCumulativeTotals: function () {
-      var tipTotal = 0;
-      var mealCount = 0;
-      var averageTip = 0;
-
-      for (var i = 0; i < meals.length; i++) {
-        tipTotal += ((meals[i].baseMealPrice * (meals[i].taxRate/100) + meals[i].baseMealPrice)) * (meals[i].tipPercentage / 100);
+    //Returns an array of all unique categories found in inventory
+    getCategories: function () {
+      var catArray =[];
+      for (var i = 0; i < inventory.length; i++) {
+        for (var j = 0; j < inventory[i].categories.length; j++) {
+            if (catArray.indexOf(inventory[i].categories[j]) === -1)
+              catArray.push(inventory[i].categories[j]);
+        }
       }
-      mealCount = meals.length;
-      averageTip = tipTotal / meals.length;
-
-      return {
-        tipTotal: tipTotal,
-        mealCount: mealCount,
-        averageTip: averageTip
-      };
+      return catArray;
     },
     addMeal: function (meal) {
       meals.push(meal);
