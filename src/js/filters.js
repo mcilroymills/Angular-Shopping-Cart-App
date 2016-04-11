@@ -16,3 +16,14 @@ app.filter('boolFilter', function () {
     }
   };
 });
+
+app.filter('cartLength', function () {
+  return function (input) {
+    if (input > 0) {
+      return '(' + input + ')';
+    }
+    else {
+      return 'Empty!';
+    }
+  };
+});

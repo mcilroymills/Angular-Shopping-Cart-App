@@ -1,27 +1,37 @@
 <div ng-controller="homeController">
   <div class="row">
-    <div class="col-md-6">
-      <form class="form-inline">
+    <form class="form-inline">
+      <div class="col-md-3">
         <div class="form-group">
           <label for="categorySearch">Search by category:</label>
           <select ng-model="search.categories" id="categorySearch" class="form-control">
-            <option value="">Select one:</option>
+            <option value="" ng-selected="true">Select one:</option>
             <option ng-repeat="category in categories | orderBy:category" value={{category}}>
               {{category}}
             </option>
           </select>
         </div>
+      </div>
+      <div class="col-md-4">
         <div class="form-group">
           <label for="nameSearch">Search by name:</label>
           <input ng-model="search.name" type="text" class="form-control" id="nameSearch">
         </div>
-      </form>
-    </div>
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-2">
-      <div id="checkout">Checkout | Bag: Empty!</div>
-    </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="sort">Sort by price:</label>
+          <select ng-model="sort" ng-init="sort=''" class="form-control" id="sort">
+            <option value="" ng-selected="true">Select one:</option>
+            <option value="price">Low to high</option>
+            <option value="-price">High to low</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <a href="/#/checkout" class="btn btn-danger pull-right">Checkout | Bag: {{ cart.length | cartLength}}</a>
+      </div>
+    </form>
   </div>
   <br>
   <!--Begin Tea Table-->
@@ -29,19 +39,8 @@
     <table class="table table-bordered">
       <thead>
         <tr>
-          <th><span id="tea">Tea</span></th>
-          <th><span id="info">Information</span>
-          <form class="form-inline pull-right">
-            <div class="form-group">
-              <label for="sort">Sort by price:</label>
-              <select ng-model="sort" class="form-control" id="sort">
-                <option value="">Select one:</option>
-                <option value="price">Low to high</option>
-                <option value="-price">High to low</option>
-              </select>
-            </div>
-          </form>
-          </th>
+          <th>Tea</th>
+          <th>Information</th>
         </tr>
       </thead>
       <tbody>
@@ -54,15 +53,15 @@
               <div class="col-md-12">
                 <h3>{{tea.name}}
                   <span class="pull-right">
-                    <form class="form-inline">
+                    <form ng-submit="addToCart(tea._id)" class="form-inline">
                       <div class="form-group">
                         <label for="quantity">Quantity:</label>
-                        <select class="form-control" id="quantity">
-                          <option>1</option>
-                          <option>2</option>
-                          <option>3</option>
-                          <option>4</option>
-                          <option>5</option>
+                        <select ng-init="quantity[tea._id]='1'" ng-model="quantity[tea._id]" class="form-control" id="quantity">
+                          <option value=1 ng-selected="true">1</option>
+                          <option value=2>2</option>
+                          <option value=3>3</option>
+                          <option value=4>4</option>
+                          <option value=5>5</option>
                         </select>
                       </div>
                       <button type="submit" class="btn btn-primary">

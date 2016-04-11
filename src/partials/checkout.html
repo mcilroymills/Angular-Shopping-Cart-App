@@ -1,0 +1,53 @@
+<div ng-controller="checkoutController">
+  <div class="row">
+    <div class="col-md-12">
+      <h3><span class="pull-left">My Shopping Bag</span> <span class="pull-right">Order total:</span></h3>
+    </div>
+  </div>
+  <br>
+  <!--Begin Tea Table-->
+  <div class="row">
+    <table class="table table-bordered">
+      <thead>
+        <tr ng-show="cart.length">
+          <th>Tea</th>
+          <th>Quantity</th>
+          <th>Sub-total</th>
+          <th>Update Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="tea in cart">
+          <td>
+            <h4>{{tea.name}}</h4>
+            <img ng-src="{{tea.imageUrl}}">
+            <p><strong>Caffeine Scale:</strong> {{tea.caffeineScale}}</p>
+            <p><strong>Ingredients:</strong> {{tea.ingredients}}</p>
+            <p><strong>Rating:</strong> {{tea.rating}}</p>
+          </td>
+          <td>
+            {{tea.quantity}}
+            <select ng-init="quantity[tea._id]=tea.quantity" ng-model="quantity[tea._id]" class="form-control" id="quantity">
+              <option value=1>1</option>
+              <option value=2>2</option>
+              <option value=3>3</option>
+              <option value=4>4</option>
+              <option value=5>5</option>
+            </select>
+          </td>
+          <td>
+            <p>{{ getSubTotal(tea._id) | currency}}</p>
+          </td>
+          <td>
+            <a ng-show="toggleEdit" ng-click="" class="btn btn-warning">Edit</a>
+            <a ng-show="toggleEdit" ng-click="editCart(tea._id, tea.quantity)" class="btn btn-warning">Save</a>
+            <a class="btn btn-danger">Remove</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div ng-show="!cart.length">
+      <h3 id="bagEmpty">Bag Empty!</h3>
+    </div>
+  </div>
+</div>

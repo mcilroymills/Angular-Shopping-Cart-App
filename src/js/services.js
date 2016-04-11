@@ -1,6 +1,8 @@
 angular.module("myApp").service("inventoryService", [function(){
 
   var inventory = data();
+  //Shopping cart is initially empty
+  var cart = [];
 
   return {
     getInventory: function () {
@@ -17,11 +19,64 @@ angular.module("myApp").service("inventoryService", [function(){
       }
       return catArray;
     },
-    addMeal: function (meal) {
-      meals.push(meal);
+    getCart: function () {
+      return cart;
     },
-    resetAll: function () {
-      meals = [];
+    //Returns a cart array with each tea only listed once w/ a quantity property
+    getSummaryCart: function () {
+      var summaryCart = [];
+
+      for (var i = 0; i < cart.length; i++) {
+        if (summaryCart.indexOf(cart[i]) === -1) {
+          summaryCart.push(cart[i]);
+          summaryCart[summaryCart.length-1].quantity = 1;
+        }
+        else
+          summaryCart[summaryCart.indexOf(cart[i])].quantity++;
+      }
+      return summaryCart;
+    },
+    //Adds a tea to the cart num times
+    addToCart: function (teaID, num) {
+      for (var j = 0; j < num; j++) {
+        for (var i = 0; i < inventory.length; i++) {
+          if (teaID === inventory[i]._id)
+            cart.push(inventory[i]);
+        }
+      }
+    },
+    //Calculates the subtotal for a given tea
+    calculateSubTotal: function (teaID) {
+      for (var i = 0; i < cart.length; i++) {
+        if (teaID === cart[i]._id) {
+          console.log("passedif!");
+          return (cart[i].price / 100) * cart[i].quantity;
+        }
+      }
+    },
+    //Updates the # of items in cart
+    editCart: function (teaID, oldQuantity, newQuantity) {
+      var itemToEdit = {};
+        //Determine the unique object to edit
+      for (var i = 0; i < inventory.length; i++) {
+          if (teaID === inventory[i]._id)
+            itemToEdit = inventory[i];
+      }
+      var itemCount = 0;
+
+      if (oldQuantity > newQuantity) {
+        //Remove item from array (oldQuantity - newQuantity) times
+        for (var i = 0; i < (oldQuantity - newQuantity); i++) {
+          var index = cart.indexOf(itemToEdit);
+          cart.splice(index, 1);
+        }
+      }
+      else {
+        //Add new item to cart array (newQuantity - oldQuantity) times
+        for (var i = 0; i < (newQuantity - oldQuantity); i++) {
+          cart.push(itemToEdit);
+        }
+      }
     }
   };
 }]);

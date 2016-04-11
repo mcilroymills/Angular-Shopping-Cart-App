@@ -4,13 +4,9 @@ app.config(function($routeProvider, $locationProvider) {
       templateUrl: '../partials/home.html',
       controller: 'homeController'
     })
-    .when('/charges', {
-      templateUrl: '../partials/charges.html',
-      controller: 'chargesCtrl'
-    })
-    .when('/earnings', {
-      templateUrl: '../partials/earnings.html',
-      controller: 'earningsCtrl'
+    .when('/checkout', {
+      templateUrl: '../partials/checkout.html',
+      controller: 'checkoutController'
     })
     .otherwise('/home');
 });
